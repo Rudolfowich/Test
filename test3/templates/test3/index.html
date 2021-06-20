@@ -1,0 +1,91 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<script type="text/javascript" scr={% static "js/jquery.min.js" %}></script>
+<script type="text/javascript" scr={% static "js/main.js" %}></script>
+<head>
+    <meta charset="UTF-8">
+    <title>Blog</title>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css">
+
+</head>
+<body>
+
+<nav class="navbar navbar-expand-md navbar-light bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand">BLOG</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="btn btn-primary btn-sm" href="{% url "home" %}" role="button">Home</a>
+
+                </li>
+                {% if user.is_authenticated %}
+
+
+                    <li class="nav-item active">
+                        <a class="btn btn-primary btn-sm" href="{% url "create_article" %}" role="button">Create
+                            Article</a>
+                    </li>
+
+
+
+                {% endif %}
+            </ul>
+            {% if user.is_authenticated %}
+                <h3>{{ request.user }}</h3>
+                <li class="nav-item">
+
+                    <a class="btn btn-danger" href="{% url "logout" %}" role="button" aria-pressed="true">logout</a>
+
+                </li>
+                </div>
+                </div></nav>
+            {% else %}
+                <li class="nav-item">
+                    <a class="btn btn-primary btn-lg" href="{% url "login" %}" role="button"
+                       aria-pressed="true">login</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url "register" %}" class="btn btn-warning btn-lg" role="button"
+                       aria-pressed="true">Register</a>
+                </li>
+                </div>
+
+                </div>
+                </nav>
+            {% endif %}
+{% for post in object_list %}
+    <div class="card" style="width: 400px; height: 380px;">
+        <img class="card-img-top" src="{{ post.poster.url }}" alt="Card image cap" style="height: 220px" ;>
+        <div class="card-body">
+            <h5 class="card-title">{{ post.name }}</h5>
+            <p class="card-text">{{ post.intro| truncatechars:120 }}</p>
+            <a href="/detail/{{ post.id }}" class="btn btn-primary">More</a>
+            <p class="card-data">{{ post.create_date }}</p>
+            {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="btn btn-primary btn-sm" href="/update/{{ post.id }}" role="button">Update Article</a></li>
+                    <form action="/delete/{{ post.id }}" method="post"
+                          id="delete_form">{% csrf_token %} <input type="submit" class="btn btn-danger" value="Delete"/></form>
+
+                </li>
+            {% endif %}
+        </div>
+    </div>
+    </div>
+
+    <p></p>
+{% endfor %}
+{% block content %}
+{% endblock %}
+</body>
+</html>

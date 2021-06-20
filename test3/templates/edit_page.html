@@ -1,0 +1,17 @@
+{% extends 'test3/index.html' %}
+{% block content %}
+    {% if update %}
+            <div class="container overflow-hidden">
+        <div class="row gx-5">
+            <div class="col">
+                <form id="update_data" method="post">
+                    {% csrf_token %}
+    {{ form }}
+                </form>
+
+                <button form="update_data" type="submit" class="btn btn-primary">Update</button>
+            </div>
+        </div>
+            </div>
+{% endif %}
+{% endblock %}

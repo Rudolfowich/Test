@@ -1,0 +1,23 @@
+{% extends 'test3/index.html' %}
+{% block content %}
+        <div class="container overflow-hidden">
+        <div class="row gx-5">
+            <div class="col">
+
+                <div class="p-3 border bg-light">
+    <div class="container px-10">
+    <h1 style="color: aliceblue">Регистрация</h1>
+    <div class="row gx-5">
+        <div class="col-3">
+    <form id="add_form" method="post">
+    {% csrf_token %}
+        {{ form }}
+    <input type="submit" class="btn btn-primary" value="create">
+    </form>
+        </div></div>
+    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+{% endblock %}

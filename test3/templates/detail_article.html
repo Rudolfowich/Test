@@ -1,0 +1,49 @@
+{% extends 'test3/index.html' %}
+{% block content %}
+    <div class="container">
+        <div class="col-md-auto">
+            <a href="/">Назад</a>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row justify-content-md-center">
+            <div class="col col-lg-2">
+                <img src="{{ get_article.poster.url }}" width="150" height="160">
+            </div>
+            <div class="col-md-auto">
+                <div class="p-3 mb-2 bg-light text-dark">{{ get_article.name }}</div>
+                <div class="p-3 mb-2 bg-light text-dark">Описание: <p>{{ get_article.intro }}</p></div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <div class="container">
+        <div class="col-md-auto">
+            <div class="p-3 mb-2 bg-light text-dark">
+                <h6>Comments:</h6>
+                <ul>{% for item in get_article.comments_post.all %}
+
+                    <li>
+                         <h5>{{ item.text }}</h5><br>
+                    Author : {{ item.author }}<br>
+                    Date : {{ item.create_date }}
+                    </li>
+
+
+                    <br>{% endfor %}</ul>
+
+            <hr>
+        </div>
+        <div class=" p-3 mb-2 bg-light text-dark"><p>
+            <div class="col">
+                <form action="" id="update_data" method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                </form>
+
+                <button form="update_data" type="submit" class="btn btn-primary">Comment</button>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}

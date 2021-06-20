@@ -1,0 +1,7 @@
+{% load static %}
+body {
+    background: url("/media/backg.jpg") no-repeat;
+    -moz-background-size: 100%;
+    -webkit-background-size: 100%;
+    background-size: 100%;
+}
